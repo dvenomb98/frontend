@@ -1,21 +1,28 @@
-import Image from 'next/image';
 import React, { FC } from 'react';
 import BannerHeader from './BannerHeader';
+import useMobileWidth from '@/hooks/useMobile';
+import { ActionButton } from '../atoms/ActionButton';
+import { useUser } from '@/context/userContext';
 
 const Banner: FC = () => {
-  return (
-    <div className="flex gap-10 items-center h-banner">
-      <div className="h-full relative lg:basis-2/3">
-        <Image
-          src="/images/banner.png"
-          fill
-          className="w-full h-full object-scale-down"
-          priority
-          alt="Main banner"
-        />
-      </div>
+  const { isMobile } = useMobileWidth();
 
+  return (
+    <div className="flex items-center sm:flex-col gap-10 justify-between lg:h-banner">
       <BannerHeader />
+
+      <img
+        src="/images/banner.png"
+        className="w-full lg:w-1/2 object-scale-down sm:max-h-96"
+        loading="eager"
+        alt="Main banner"
+      />
+
+      {isMobile && (
+        <ActionButton size="big" width="full" shadow="glow">
+          Start now
+        </ActionButton>
+      )}
     </div>
   );
 };

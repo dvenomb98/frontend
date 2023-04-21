@@ -8,9 +8,7 @@
   
     body {
         font-family: Poppins, system-ui, sans-serif;
-        @apply text-base bg-primary-black text-primary-white
+        @apply text-base bg-neutral-dark text-neutral-light 
     }
  
-
-   
   }
