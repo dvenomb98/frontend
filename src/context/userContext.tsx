@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { GoogleAuthProvider, User, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, User, onAuthStateChanged, signInWithRedirect } from 'firebase/auth';
 import { auth, db } from '../../firebase';
 import { UserData } from '@/types/firebaseTypes';
 import { createUserDocument } from '@/utils/userUtils';
@@ -38,7 +38,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const provider = new GoogleAuthProvider();
     try {
       setAuthLoading(true);
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithRedirect(auth, provider);
 
       const { user } = result;
 
