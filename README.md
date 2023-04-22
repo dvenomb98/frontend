@@ -19,7 +19,7 @@ BJJ DOJO is an online platform that curates free YouTube videos from the best Br
 
 ## Installation
 
-**Warning**: You will need Firebase keys to connect to the database. Contact the me for access to the required credentials.
+**Warning**: You will need Firebase keys to connect to the database. Contactme for access to the required credentials.
 
 - Clone project
 - Run npm install
