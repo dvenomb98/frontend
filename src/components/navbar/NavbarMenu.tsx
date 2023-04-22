@@ -1,5 +1,5 @@
 import { useUser } from '@/context/userContext';
-import { AcademicCapIcon, HeartIcon, HomeIcon } from '@heroicons/react/24/solid';
+import { AcademicCapIcon, HeartIcon, HomeIcon, InboxIcon } from '@heroicons/react/24/solid';
 import React, { FC } from 'react';
 import { ActionButton } from '../atoms/ActionButton';
 import UserBadge from '../atoms/UserBadge';
@@ -55,6 +55,7 @@ const NavbarMenu: FC = () => {
             })}
           </>
         )}
+        <MenuItem label={'Contact'} path={'/contact'} icon={<InboxIcon className="w-5 h-5" />} />
       </ul>
 
       <div>

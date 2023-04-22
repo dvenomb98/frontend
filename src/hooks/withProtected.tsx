@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import auth from '../../firebase';
 import { useUser } from '@/context/userContext';
-import FullPageLoader from '@/components/atoms/FullPageLoader';
+import PageLoader from '@/components/atoms/PageLoader';
 
 export function withProtected(Component: React.ComponentType) {
   return function WithProtected(props: React.PropsWithChildren<any>) {
@@ -16,7 +16,7 @@ export function withProtected(Component: React.ComponentType) {
     }, [user, router]);
 
     if (!user) {
-      return <FullPageLoader loading />;
+      return <PageLoader isLoading />;
     }
     return <Component auth={auth} {...props} />;
   };

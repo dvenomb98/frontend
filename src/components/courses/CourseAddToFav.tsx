@@ -7,20 +7,19 @@ import React, { FC, useState } from 'react';
 
 interface CourseAddToFavProps {
   id: string;
+  isFavorite: boolean;
 }
 
-const CourseAddToFav: FC<CourseAddToFavProps> = ({ id }) => {
+const CourseAddToFav: FC<CourseAddToFavProps> = ({ id, isFavorite }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { userData, user } = useUser();
+  const { user, userData } = useUser();
   const { enqueueSnackbar } = useSnackbar();
 
   if (!user || !userData) return null;
 
-  const isFavorite = isVideoFavorite(id, userData?.favorites);
-
   const handleFavorites = async () => {
     setLoading(true);
-    const res = await addToFavorites(id, user.uid);
+    const res = await addToFavorites(id, user.uid, userData.favorites);
     setLoading(false);
 
     if (res) {

@@ -1,6 +1,7 @@
 import * as yup from 'yup';
 
 const validationRequired = 'Required';
+
 const useFieldValidation = () => {
   const yupFieldEnum = (Enum: Record<string, string>) =>
     yup

@@ -1,12 +1,29 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Container from '../layouts/Container';
 import { Bars3BottomRightIcon } from '@heroicons/react/24/solid';
 import { useToggle } from 'react-use';
-import NavbarDrawer from './NavbarDrawer';
 import Logo from '../atoms/Logo';
+import CustomDrawer from '../drawer/CustomDrawer';
+import NavbarMenu from './NavbarMenu';
+import { useRouter } from 'next/router';
 
 const Navbar: FC = () => {
   const [isOpen, toggle] = useToggle(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleRouteChange = () => {
+      toggle();
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router, isOpen]);
+
   return (
     <>
       <Container>
@@ -19,7 +36,9 @@ const Navbar: FC = () => {
         </div>
       </Container>
 
-      <NavbarDrawer isOpen={isOpen} toggle={toggle} />
+      <CustomDrawer anchor={'right'} isOpen={isOpen} toggle={toggle} keepMounted>
+        <NavbarMenu />
+      </CustomDrawer>
     </>
   );
 };

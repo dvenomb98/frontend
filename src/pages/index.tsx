@@ -1,6 +1,5 @@
 import Badges from '@/components/atoms/Badges';
 import Header, { HeaderSize } from '@/components/atoms/Header';
-import ThemeToggler from '@/components/atoms/ThemeToggler';
 import Banner from '@/components/banner/Banner';
 import CoursesWrapper from '@/components/courses/CoursesWrapper';
 import PageLayout from '@/components/layouts/PageLayout';
@@ -18,7 +17,7 @@ const Home: NextPage<HomeProps> = ({ courses }) => {
       <Banner />
       <Badges />
       <div className="flex flex-col gap-10 mt-16">
-        <Header size={HeaderSize.SUBHEADER} title="Fresh Courses" />
+        <Header size={HeaderSize.SUBHEADER} title="Fresh courses" />
         <CoursesWrapper courses={courses} />
       </div>
     </PageLayout>

@@ -8,12 +8,12 @@ import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyCD4IpkzOUQUtizWavGRFxc8g4TVJOD3lA',
-  authDomain: 'krtekmoneylife-c11c2.firebaseapp.com',
-  projectId: 'krtekmoneylife-c11c2',
-  storageBucket: 'krtekmoneylife-c11c2.appspot.com',
-  messagingSenderId: '813791864200',
-  appId: '1:813791864200:web:1c662e533ec80e292bc63d',
+  apiKey: process.env.NEXT_PUBLIC_FB_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FB_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FB_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FB_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FB_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FB_APP_ID,
 };
 
 // Initialize Firebase

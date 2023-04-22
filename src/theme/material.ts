@@ -16,6 +16,7 @@ declare module '@mui/material/styles' {
 
 const THEME = createTheme({
   typography: {
+    fontSize: 16,
     fontFamily: `"Poppins", sans-serif`,
     fontWeightLight: 200,
     fontWeightRegular: 400,
@@ -31,15 +32,28 @@ const THEME = createTheme({
   },
   palette: {
     mode: 'dark',
+    divider: '#6b7280',
     primary: {
       light: '#fef3c7',
       main: '#f59e0b',
       dark: '#d97706',
     },
     secondary: {
-      light: '#fafafa',
-      main: '#f4f4f5',
-      dark: '#18181b',
+      light: '#f1f5f9',
+      main: '#94a3b8',
+      dark: '#475569',
+    },
+  },
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          '&:-webkit-autofill': {
+            '-webkit-box-shadow': '0 0 0 100px #09090b inset',
+            '-webkit-text-fill-color': '#fffff',
+          },
+        },
+      },
     },
   },
 });

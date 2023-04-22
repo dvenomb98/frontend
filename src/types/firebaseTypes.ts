@@ -35,4 +35,5 @@ export interface UserData {
   email: string;
   photoURL: string;
   favorites: string[];
+  completed: string[];
 }

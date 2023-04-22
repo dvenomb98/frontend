@@ -14,7 +14,7 @@ module.exports = {
     },
     fontSize: {
       small: '0.85rem',
-      base: '1.1rem',
+      base: '1rem',
       h4: '1.25rem',
       h3: '1.5rem',
       h2: '1.875rem',
@@ -36,27 +36,42 @@ module.exports = {
     colors: {
       primary: {
         gold: {
-          light: '#fef3c7', // 100
-          DEFAULT: '#f59e0b', // 400
-          dark: '#d97706', // 500
+          light: '#fef3c7',
+          DEFAULT: '#f59e0b',
+          dark: '#d97706',
         },
-        red: {
-          light: '#fca5a5', // 300
-          DEFAULT: '#dc2626', // 600
-          dark: '#b91c1c', // 700
+        error: {
+          light: '#e57373',
+          DEFAULT: '#f44336',
+          dark: '#d32f2f',
         },
-        green: {
-          light: '#bbf7d0', // 200
-          DEFAULT: '#22c55e', // 500
-          dark: '#15803d', // 700
+        warning: {
+          light: '#ffb74d',
+          DEFAULT: '#ffa726',
+          dark: '#f57c00',
         },
-        gray: '#6b7280', // 500
+        info: {
+          light: '#4fc3f7',
+          DEFAULT: '#29b6f6',
+          dark: '#0288d1',
+        },
+        success: {
+          light: '#81c784',
+          DEFAULT: '#66bb6a',
+          dark: '#388e3c',
+        },
+        gray: '#6b7280',
+        black: '#09090b',
       },
       neutral: {
-        light: '#f4f4f5', // 200
+        light: '#f4f4f5',
         DEFAULT: '#121212',
-        dark: '#18181b', // 900
-        ultradark: '#09090b', // 950
+        dark: '#18181b',
+      },
+      secondary: {
+        light: '#f1f5f9',
+        DEFAULT: '#94a3b8',
+        DARK: '#475569',
       },
     },
     extend: {
@@ -65,5 +80,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss')('./tailwind.config.js'), require('autoprefixer')],
 };

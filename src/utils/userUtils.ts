@@ -7,16 +7,21 @@ import { FirebaseDocs } from '@/constants/firebaseConsts';
 export const isVideoFavorite = (videoId: string, favorites: string[]) =>
   favorites.some((favorite) => favorite === videoId);
 
-export const addToFavorites = async (videoId: string, userId: string): Promise<boolean> => {
-  if (!userId) return false;
+export const isMarkedAsCompleted = (videoId: string, completed: string[]) =>
+  completed?.some((video) => video === videoId);
 
-  const userRef = doc(db, 'users', userId);
-  const userDoc = await getDoc(userRef);
+// In addToFavorites and addToCompleted we could first fetch userData from database and then look video is completed.
+// But we got web socket connected to userData, so there shouldnt be any missmatch.
+// Could change it later
 
-  if (!userDoc.exists()) return false;
+export const addToFavorites = async (
+  videoId: string,
+  userId: string,
+  favorites: string[],
+): Promise<boolean> => {
+  if (!userId || !videoId) return false;
 
-  const userData = userDoc.data() as UserData;
-  const favorites = userData.favorites || [];
+  const userRef = doc(db, FirebaseDocs.USERS, userId);
 
   const isFavorite = isVideoFavorite(videoId, favorites);
 
@@ -39,6 +44,34 @@ export const addToFavorites = async (videoId: string, userId: string): Promise<b
   }
 };
 
+export const addToCompleted = async (
+  videoId: string,
+  userId: string,
+  completed: string[],
+): Promise<boolean> => {
+  if (!userId || !videoId) return false;
+
+  const userRef = doc(db, FirebaseDocs.USERS, userId);
+  const isCompleted = isMarkedAsCompleted(videoId, completed);
+
+  try {
+    if (isCompleted) {
+      await updateDoc(userRef, {
+        completed: arrayRemove(videoId),
+      });
+      return true;
+    } else {
+      await updateDoc(userRef, {
+        completed: arrayUnion(videoId),
+      });
+      return true;
+    }
+  } catch (error) {
+    console.error('Error updating favorites', error);
+    return false;
+  }
+};
+
 export const createUserDocument = async (user: User) => {
   try {
     const userRef = doc(db, FirebaseDocs.USERS, user.uid);
@@ -53,6 +86,8 @@ export const createUserDocument = async (user: User) => {
           email,
           photoURL,
           createdAt: metadata.creationTime,
+          completed: [],
+          favorites: [],
         });
       } catch (e) {
         console.error('Error creating user document', e);

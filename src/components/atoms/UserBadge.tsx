@@ -1,9 +1,10 @@
 import { useUser } from '@/context/userContext';
-import { ArrowLeftOnRectangleIcon, Cog8ToothIcon } from '@heroicons/react/24/solid';
-import { Avatar, Button } from '@mui/material';
+import { ArrowLeftOnRectangleIcon, UserIcon } from '@heroicons/react/24/solid';
+import { Button } from '@mui/material';
 import React, { FC } from 'react';
 import AccountModal from '../account/AccountModal';
 import { useToggle } from 'react-use';
+import UserProfile from './UserProfile';
 
 const buttonSX = { display: 'flex', alignContent: 'center', gap: 2 };
 
@@ -15,31 +16,25 @@ const UserBadge: FC = () => {
 
   return (
     <>
-      <div className="flex flex-col lg:items-start gap-5">
-        <div className="flex items-center gap-2 sm:flex-col sm:text-center">
-          <Avatar
-            src={userData.photoURL}
-            alt={userData.displayName}
-            sx={{ height: 50, width: 50 }}
-          />
-
-          <div>
-            <p>{userData.displayName}</p>
-            <p className="text-small text-primary-gray">{userData.email}</p>
-          </div>
-        </div>
-
+      <div className="flex flex-col lg:items-start sm:items-center gap-5">
+        <UserProfile
+          photoURL={userData.photoURL}
+          displayName={userData.displayName}
+          email={userData.email}
+          className="sm:flex-col sm:text-center"
+        />
         <div className="flex justify-between w-full items-center sm:flex-col sm:gap-5">
           <Button onClick={signOut} sx={buttonSX}>
             <ArrowLeftOnRectangleIcon className="w-5 h-5" />
             Sign out
           </Button>
           <Button onClick={toggle} sx={buttonSX} color="secondary">
-            <Cog8ToothIcon className="w-5 h-5" />
-            Settings
+            <UserIcon className="w-5 h-5" />
+            Account
           </Button>
         </div>
       </div>
+
       <AccountModal open={open} toggle={toggle} />
     </>
   );
