@@ -5,6 +5,7 @@ export interface Courses {
   short_description: string;
   description: string[];
   difficulty: number;
+  tags: string[];
 }
 
 export interface Creator {
