@@ -7,8 +7,4 @@ module.exports = {
     MIN: 1025,
     MAX: 1920,
   },
-  FULLHD: {
-    MIN: 1921,
-    MAX: 4000,
-  },
 };

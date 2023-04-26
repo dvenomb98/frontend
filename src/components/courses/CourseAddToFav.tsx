@@ -1,5 +1,5 @@
 import { useUser } from '@/context/userContext';
-import { addToFavorites, isVideoFavorite } from '@/utils/userUtils';
+import { addToFavorites } from '@/utils/userUtils';
 import { HeartIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { Button } from '@mui/material';
 import { useSnackbar } from 'notistack';

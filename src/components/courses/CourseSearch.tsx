@@ -22,11 +22,11 @@ const CourseSearch: FC<CourseSearchProps> = ({ options, searchValue, setSearchVa
 
   return (
     <FormControl fullWidth>
-      <InputLabel id="course-search-label">Search</InputLabel>
+      <InputLabel id="course-search-label">Filter</InputLabel>
       <Select
         labelId="course-search-label"
         id="course-search"
-        label="Search"
+        label="Filter"
         value={searchValue}
         onChange={handleChange}
         sx={{ textTransform: 'capitalize' }}

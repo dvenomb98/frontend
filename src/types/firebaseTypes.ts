@@ -15,6 +15,7 @@ export interface Creator {
   id: string;
   instagram: string;
   name: string;
+  world_champ: boolean;
 }
 
 export interface Videos {

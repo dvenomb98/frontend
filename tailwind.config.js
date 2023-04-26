@@ -31,7 +31,12 @@ module.exports = {
     screens: {
       sm: { max: `${BREAKPOINTS.SM.MAX}px` },
       lg: `${BREAKPOINTS.LG.MIN}px`,
-      fullhd: `${BREAKPOINTS.FULLHD.MIN}px`,
+    },
+    container: {
+      screens: {
+        sm: { max: `${BREAKPOINTS.SM.MAX}px` },
+        lg: `${BREAKPOINTS.LG.MIN}px`,
+      },
     },
     colors: {
       primary: {
@@ -71,7 +76,7 @@ module.exports = {
       secondary: {
         light: '#f1f5f9',
         DEFAULT: '#94a3b8',
-        DARK: '#475569',
+        dark: '#475569',
       },
     },
     extend: {

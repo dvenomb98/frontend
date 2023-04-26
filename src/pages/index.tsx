@@ -6,6 +6,7 @@ import PageLayout from '@/components/layouts/PageLayout';
 import { Courses } from '@/types/firebaseTypes';
 import { fetchAllCourses } from '@/utils/fetchUtils';
 import { GetStaticProps, NextPage } from 'next';
+import { revalidate } from '@/config/next';
 
 interface HomeProps {
   courses: Courses[];
@@ -33,6 +34,6 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       courses,
     },
-    revalidate: 500,
+    revalidate,
   };
 };

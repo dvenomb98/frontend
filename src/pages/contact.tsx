@@ -1,17 +1,15 @@
 import Description from '@/components/atoms/Description';
 import Header, { HeaderSize } from '@/components/atoms/Header';
 import PageLoader from '@/components/atoms/PageLoader';
-import CourseDescription from '@/components/courses/CourseDescription';
 import FormInput from '@/components/form/Input';
 import PageLayout from '@/components/layouts/PageLayout';
 import { contactlist } from '@/constants/contactlist';
-import { FormStatus } from '@/constants/globals';
 import useFieldValidation from '@/hooks/useValidation';
 import { Button } from '@mui/material';
 import { Form, Formik } from 'formik';
 import { NextPage } from 'next';
 import { useSnackbar } from 'notistack';
-import React, { useState } from 'react';
+import React from 'react';
 import * as yup from 'yup';
 
 const initialValues = {
@@ -42,7 +40,6 @@ const Contact: NextPage = () => {
         validationSchema={validationSchema}
         initialValues={initialValues}
         onSubmit={async (values, { resetForm }) => {
-          console.log(values);
           const response = await fetch('api/sendEmail', {
             method: 'POST',
             headers: {

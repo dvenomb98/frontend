@@ -10,7 +10,6 @@ declare module '@mui/material/styles' {
     xl: false;
     mobile: true;
     desktop: true;
-    fullhd: true;
   }
 }
 
@@ -27,7 +26,6 @@ const THEME = createTheme({
     values: {
       mobile: 0,
       desktop: BREAKPOINTS.LG.MIN,
-      fullhd: BREAKPOINTS.FULLHD.MIN,
     },
   },
   palette: {

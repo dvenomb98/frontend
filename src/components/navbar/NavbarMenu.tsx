@@ -1,5 +1,11 @@
 import { useUser } from '@/context/userContext';
-import { AcademicCapIcon, HeartIcon, HomeIcon, InboxIcon } from '@heroicons/react/24/solid';
+import {
+  AcademicCapIcon,
+  HeartIcon,
+  HomeIcon,
+  InboxIcon,
+  UsersIcon,
+} from '@heroicons/react/24/solid';
 import React, { FC } from 'react';
 import { ActionButton } from '../atoms/ActionButton';
 import UserBadge from '../atoms/UserBadge';
@@ -16,6 +22,11 @@ const menuData = [
     path: '/courses',
     icon: AcademicCapIcon,
   },
+  {
+    label: 'Creators',
+    path: '/creators',
+    icon: UsersIcon,
+  },
 ];
 
 const menuAuthData = [
@@ -31,7 +42,7 @@ const NavbarMenu: FC = () => {
 
   return (
     <nav className="p-10 h-full flex flex-col justify-between">
-      <ul className="flex flex-col  divide-y divide-primary-gray">
+      <ul className="flex flex-col  divide-y divide-primary-gray mb-10">
         {/* NOT SIGNED IT DATA */}
         {menuData.map(({ label, path, icon }) => {
           const Icon = icon;

@@ -2,8 +2,10 @@ import Header, { HeaderSize } from '@/components/atoms/Header';
 import CourseSearch from '@/components/courses/CourseSearch';
 import CoursesWrapper from '@/components/courses/CoursesWrapper';
 import PageLayout from '@/components/layouts/PageLayout';
+import { revalidate } from '@/config/next';
 import { Courses } from '@/types/firebaseTypes';
 import { fetchAllCourses } from '@/utils/fetchUtils';
+import { getAllTagsFromCourses } from '@/utils/parseUtils';
 import { GetStaticProps, NextPage } from 'next';
 import React, { useMemo, useState } from 'react';
 
@@ -40,14 +42,7 @@ export default Courses;
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const courses = await fetchAllCourses();
-
-    // Create tags
-    const allTags = courses.flatMap((course) => course?.tags);
-    const uniqueTags = [...new Set(allTags)];
-    const searchOptions = uniqueTags.map((tag) => ({
-      label: tag,
-      value: tag,
-    }));
+    const searchOptions = getAllTagsFromCourses(courses);
 
     return {
       props: {
@@ -58,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
   } catch {
     return {
       notFound: true,
-      revalidate: 500,
+      revalidate,
     };
   }
 };

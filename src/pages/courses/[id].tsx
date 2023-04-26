@@ -7,7 +7,7 @@ import PageLayout from '@/components/layouts/PageLayout';
 import { useUser } from '@/context/userContext';
 import { CourseContent, Courses } from '@/types/firebaseTypes';
 import { fetchAllCourses, fetchSingleCourse, fetchCourseContent } from '@/utils/fetchUtils';
-
+import { revalidate } from '@/config/next';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 
@@ -70,16 +70,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const course = await fetchSingleCourse(params?.id as string);
 
     if (!course) {
-      return { notFound: true, revalidate: 500 };
+      return { notFound: true, revalidate };
     }
 
     return {
       props: {
         course,
       },
-      revalidate: 500,
+      revalidate,
     };
   } catch {
-    return { notFound: true, revalidate: 500 };
+    return { notFound: true, revalidate };
   }
 };

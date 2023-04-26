@@ -7,10 +7,10 @@ import React from 'react';
 const ErrorPage: NextPage = () => {
   return (
     <PageLayout>
-      <Header size={HeaderSize.SUBHEADER} title="Nothing found here" />
+      <Header size={HeaderSize.SUBHEADER} title="404 Nothing found here" />
       <p>
         It looks like this page doesn&apos;t exist or is temporarily unavailable. Try looking at our
-        list of
+        list of {''}
         <Link href="/courses" className="underline text-primary-gold">
           courses.
         </Link>

@@ -5,6 +5,7 @@ import { Alert, AlertTitle } from '@mui/material';
 
 import CourseAccordion from './CourseAccordion';
 import AuthorCard from '../atoms/AuthorCard';
+import CreatorsWrapper from '../layouts/CreatorsWrapper';
 
 interface CourseInnerProps {
   data?: CourseContent;
@@ -36,11 +37,11 @@ const CourseInner: FC<CourseInnerProps> = ({ data }) => {
       {/* AUTHORS  */}
       <div className="flex flex-col gap-10">
         <Header title="Video authors" size={HeaderSize.H3} />
-        <div className="grid grid-cols-3 grid-rows-auto gap-5 sm:grid-cols-1">
+        <CreatorsWrapper>
           {creators?.map((item) => (
             <AuthorCard key={item.id} author={item} />
           ))}
-        </div>
+        </CreatorsWrapper>
       </div>
     </>
   );
