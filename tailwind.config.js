@@ -78,6 +78,13 @@ module.exports = {
         DEFAULT: '#94a3b8',
         dark: '#475569',
       },
+      rank: {
+        white: '#fafafa',
+        blue: '#06b6d4',
+        purple: '#a855f7',
+        brown: '#713f12',
+        black: '#09090b',
+      },
     },
     extend: {
       height: {
@@ -85,5 +92,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss')('./tailwind.config.js'), require('autoprefixer')],
+  plugins: [],
 };

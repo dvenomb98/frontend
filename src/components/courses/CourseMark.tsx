@@ -19,7 +19,7 @@ const CourseMark: FC<CourseMarkProps> = ({ id, isCompleted }) => {
 
   const handleCompleted = async () => {
     setLoading(true);
-    const res = await addToCompleted(id, user.uid, userData.completed || []);
+    const res = await addToCompleted(id, user.uid, userData.completed, userData.rank);
     setLoading(false);
 
     if (res) {

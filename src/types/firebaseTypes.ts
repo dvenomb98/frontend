@@ -1,3 +1,5 @@
+import { UserRank } from '@/constants/user';
+
 export interface Courses {
   id: string;
   title: string;
@@ -38,4 +40,5 @@ export interface UserData {
   photoURL: string;
   favorites: string[];
   completed: string[];
+  rank: UserRank;
 }

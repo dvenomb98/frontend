@@ -17,7 +17,7 @@ const CourseBanner: FC<CourseBannerProps> = ({ img, title, short_description, di
   return (
     <Container>
       <div className="flex sm:flex-col items-center gap-10">
-        <div className="relative h-banner lg:w-1/2 sm:w-full rounded-md overflow-hidden">
+        <div className="relative h-banner sm:h-[400px] lg:w-1/2 sm:w-full rounded-md overflow-hidden">
           <Image src={img} alt={title} fill className="w-full h-full object-cover " priority />
         </div>
         <div className="flex flex-col gap-5 justify-center lg:w-1/2">

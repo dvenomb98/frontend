@@ -21,6 +21,7 @@ const UserBadge: FC = () => {
           photoURL={userData.photoURL}
           displayName={userData.displayName}
           email={userData.email}
+          rank={userData.rank}
           className="sm:flex-col sm:text-center"
         />
         <div className="flex justify-between w-full items-center sm:flex-col sm:gap-5">

@@ -19,7 +19,7 @@ const AuthorCard: FC<AuthorCardProps> = ({
       <Avatar src={avatar} alt={name} sx={{ height: 124, width: 124 }} />
       <div className="flex flex-col gap-2 w-full">
         <div className="flex items-center gap-2 justify-between">
-          <p className="text-h4">{name}</p>
+          <p className="text-h4 sm:text-base">{name}</p>
           {world_champ && (
             <CustomTooltip
               placement="top"

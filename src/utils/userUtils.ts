@@ -1,8 +1,9 @@
 import { arrayRemove, arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { UserData } from '@/types/firebaseTypes';
 import { User } from 'firebase/auth';
 import { FirebaseDocs } from '@/constants/firebaseConsts';
+import { UserRank } from '@/constants/user';
+import { Maybe } from 'yup';
 
 export const isVideoFavorite = (videoId: string, favorites: string[]) =>
   favorites.some((favorite) => favorite === videoId);
@@ -48,6 +49,7 @@ export const addToCompleted = async (
   videoId: string,
   userId: string,
   completed: string[],
+  currentRank: UserRank,
 ): Promise<boolean> => {
   if (!userId || !videoId) return false;
 
@@ -61,8 +63,10 @@ export const addToCompleted = async (
       });
       return true;
     } else {
+      const newRank = shouldUserRankUp(completed.length + 1, currentRank);
       await updateDoc(userRef, {
         completed: arrayUnion(videoId),
+        rank: newRank || currentRank,
       });
       return true;
     }
@@ -88,6 +92,7 @@ export const createUserDocument = async (user: User) => {
           createdAt: metadata.creationTime,
           completed: [],
           favorites: [],
+          rank: UserRank.WHITE,
         });
       } catch (e) {
         console.error('Error creating user document', e);
@@ -96,4 +101,12 @@ export const createUserDocument = async (user: User) => {
   } catch (e) {
     console.error('Error during creaeUserDocument', e);
   }
+};
+
+export const shouldUserRankUp = (completedVideos: number, currentRank: string): Maybe<UserRank> => {
+  if (completedVideos >= 5 && currentRank === UserRank.WHITE) return UserRank.BLUE;
+  else if (completedVideos >= 10 && currentRank === UserRank.BLUE) return UserRank.PURPLE;
+  else if (completedVideos >= 15 && currentRank === UserRank.PURPLE) return UserRank.BROWN;
+  else if (completedVideos >= 20 && currentRank === UserRank.BROWN) return UserRank.BLACK;
+  else return undefined;
 };

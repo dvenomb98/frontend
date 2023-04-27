@@ -27,6 +27,7 @@ const AccountModal: FC<AccountModalProps> = ({ open, toggle }) => {
             photoURL={userData.photoURL}
             displayName={userData.displayName}
             email={userData.email}
+            rank={userData.rank}
           />
           <Chip
             avatar={<CheckCircleIcon className="w-5 h-5 fill-primary-success" />}
