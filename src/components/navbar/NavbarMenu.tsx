@@ -28,14 +28,14 @@ const menuData = [
     path: '/creators',
     icon: UsersIcon,
   },
+];
+
+const menuAuthData = [
   {
     label: 'Forum',
     path: '/forum',
     icon: BuildingLibraryIcon,
   },
-];
-
-const menuAuthData = [
   {
     label: 'Favorites',
     path: '/favorites',

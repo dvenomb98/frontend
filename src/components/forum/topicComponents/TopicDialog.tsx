@@ -17,7 +17,7 @@ interface TopicDialogProps {
 const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
   const [isOpen, toggle] = useToggle(false);
   const [comments, setComments] = useState<Comment[] | undefined>(undefined);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
   const { isMobile } = useMobileWidth();
 
   const { title, likes, content, user_profile, id } = topic;
@@ -25,13 +25,11 @@ const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
   const dialogTitle = `Topic from ${user_profile.displayName}`;
 
   useEffect(() => {
-    if (!isOpen) return;
-
+    if (!isOpen || loaded) return;
     const fetchComments = async () => {
-      setLoading(true);
       const data = await fetchForumComments(id);
       setComments(data);
-      setLoading(false);
+      setLoaded(true);
     };
 
     fetchComments();
@@ -43,6 +41,7 @@ const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
         Read more
       </Button>
       <CustomDialog
+        keepMounted={loaded}
         title={dialogTitle}
         open={isOpen}
         toggle={toggle}
@@ -56,7 +55,7 @@ const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
             <p className="text-primary-gray">{content}</p>
           </div>
           <div className="flex flex-col gap-4 py-10">
-            {loading ? (
+            {!loaded ? (
               <CommentSkeletons />
             ) : (
               <>
