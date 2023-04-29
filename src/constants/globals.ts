@@ -16,3 +16,7 @@ export const GLOBAL_SEO = {
     },
   ],
 };
+
+export enum URLS {
+  FORUM = '/forum',
+}

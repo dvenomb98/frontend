@@ -1,7 +1,17 @@
-import { CourseContent, Courses, Creator, Videos } from '@/types/firebaseTypes';
-import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
+import {
+  Comment,
+  CourseContent,
+  Courses,
+  Creator,
+  Forum,
+  Topic,
+  UserNonSensitive,
+  Videos,
+} from '@/types/firebaseTypes';
+import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { FirebaseDocs } from '@/constants/firebaseConsts';
+import axios from 'axios';
 
 export const fetchAllCourses = async (): Promise<Courses[]> => {
   try {
@@ -122,6 +132,79 @@ export const fetchFavorites = async (favorites: string[]): Promise<Videos[]> => 
     });
 
     return withCreators;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
+export const fetchForumContent = async (): Promise<Forum[]> => {
+  try {
+    const querySnapshot = await getDocs(collection(db, FirebaseDocs.FORUM));
+    const docsArray = querySnapshot.docs.map((doc) => {
+      return doc.data();
+    });
+    return docsArray as Forum[];
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
+export const fetchSingleForumContent = async (id: string): Promise<Courses | undefined> => {
+  try {
+    const ref = doc(db, FirebaseDocs.FORUM, id);
+    const docSnap = await getDoc(ref);
+
+    if (!docSnap.exists()) {
+      return undefined;
+    }
+
+    return docSnap.data() as Courses;
+  } catch (e) {
+    console.error(e);
+    return undefined;
+  }
+};
+
+export const fetchForumTopic = async (id: string): Promise<Topic[]> => {
+  const ref = collection(db, FirebaseDocs.TOPICS);
+  const q = query(ref, where('forum_id', '==', id));
+
+  try {
+    const response = await axios.get(`${process.env.DOMAIN}/api/users`);
+    const usersNonSensitive: UserNonSensitive[] = response.data;
+    const querySnapshot = await getDocs(q);
+
+    const docsArray = querySnapshot.docs.map((doc) => doc.data());
+    const topicWithUser = docsArray.map((doc) => ({
+      ...doc,
+      user_profile: usersNonSensitive.find((user) => user.id === doc.user_id),
+    }));
+
+    return Promise.all(topicWithUser as Topic[]);
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+};
+
+export const fetchForumComments = async (id: string): Promise<Comment[]> => {
+  const ref = collection(db, FirebaseDocs.COMMENTS);
+  const q = query(ref, where('topic_id', '==', id));
+
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_DOMAIN}/api/users`);
+    const usersNonSensitive: UserNonSensitive[] = response.data;
+    const querySnapshot = await getDocs(q);
+
+    const docsArray = querySnapshot.docs.map((doc) => doc.data());
+    const commentWithUser = docsArray.map((doc) => ({
+      ...doc,
+      user_profile: usersNonSensitive.find((user) => user.id === doc.user_id),
+    }));
+
+    return Promise.all(commentWithUser as Comment[]);
   } catch (e) {
     console.error(e);
     return [];

@@ -23,16 +23,32 @@ interface CustomDialogProps extends DialogProps {
   toggle: () => void;
   children: React.ReactNode;
   title: string;
+  desktopWidth?: string | number;
+  mobileWidth?: string | number;
 }
 
-const CustomDialog: FC<CustomDialogProps> = ({ toggle, children, title, ...props }) => {
+const CustomDialog: FC<CustomDialogProps> = ({
+  toggle,
+  children,
+  title,
+  desktopWidth,
+  mobileWidth,
+  ...props
+}) => {
   const { isMobile } = useMobileWidth();
+
   return (
     <Dialog
       PaperProps={{
         sx: {
           background: '#18181b',
-          width: isMobile ? '80%' : '600px',
+          width: isMobile
+            ? mobileWidth
+              ? mobileWidth
+              : '80%'
+            : desktopWidth
+            ? desktopWidth
+            : '600px',
         },
       }}
       onClose={toggle}

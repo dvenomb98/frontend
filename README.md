@@ -8,6 +8,7 @@ BJJ DOJO is an online platform that curates free YouTube videos from the best Br
 ### Upcoming features:
 
 - :x: Theme switcher
+- :x: Finish forum page
 - :x: Finish homepage
 - :white_check_mark: User ranking as belt based on viewed content
 - :x: Add at least 10 more courses

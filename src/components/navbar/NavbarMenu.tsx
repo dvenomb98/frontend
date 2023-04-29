@@ -1,6 +1,7 @@
 import { useUser } from '@/context/userContext';
 import {
   AcademicCapIcon,
+  BuildingLibraryIcon,
   HeartIcon,
   HomeIcon,
   InboxIcon,
@@ -26,6 +27,11 @@ const menuData = [
     label: 'Creators',
     path: '/creators',
     icon: UsersIcon,
+  },
+  {
+    label: 'Forum',
+    path: '/forum',
+    icon: BuildingLibraryIcon,
   },
 ];
 

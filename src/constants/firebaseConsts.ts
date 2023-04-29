@@ -3,4 +3,7 @@ export enum FirebaseDocs {
   CONTENT = 'content',
   CREATORS = 'creators',
   USERS = 'users',
+  FORUM = 'forum',
+  TOPICS = 'topics',
+  COMMENTS = 'forum_comments',
 }

@@ -1,4 +1,5 @@
 import { UserRank } from '@/constants/user';
+import { User } from 'firebase/auth';
 
 export interface Courses {
   id: string;
@@ -41,4 +42,33 @@ export interface UserData {
   favorites: string[];
   completed: string[];
   rank: UserRank;
+  id: string;
+}
+
+export type UserNonSensitive = Pick<UserData, 'displayName' | 'photoURL' | 'rank' | 'id'>;
+
+export interface Forum {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface Topic {
+  id: string;
+  likes: string[];
+  forum_id: string;
+  content: any;
+  created_at: string;
+  user_id: string;
+  title: string;
+  user_profile: UserNonSensitive;
+}
+
+export interface Comment {
+  id: string;
+  content: string;
+  created_at: string;
+  topic_id: string;
+  user_id: string;
+  user_profile: UserNonSensitive;
 }
