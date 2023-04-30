@@ -5,16 +5,24 @@
 
 BJJ DOJO is an online platform that curates free YouTube videos from the best Brazilian Jiu-Jitsu instructors and organizes them into comprehensive courses. This allows users to learn from the best without having to spend time searching for content or organizing it themselves.
 
-### Upcoming features:
+### Features
+- :white_check_mark: Blazing fast - Utilizing Next.js for SSG and SSR, most content is generated on the server and served as static pages to enhance SEO and user experience. Any additional content needed is fetched on the client side.
+- :white_check_mark: Beautiful styling - Aesthetically pleasing design utilizing Tailwind CSS and Material-UI for a modern and visually appealing user interface.
+- :white_check_mark: Forum - Users can create posts in specific categories, like and comment on them. Only non-sensitive information, such as name and profile photo, is fetched from "/api/users/" to prevent client-side data leaks.
+- :white_check_mark: User rankings based on belts - Users can view each other's rank in the forum, which is determined by the amount of content viewed.
+- :white_check_mark: Creators page - Users can view all instructors' profiles, even if they are not registered.
+- :white_check_mark: Courses - Users can access all courses and their content, watch videos, and mark them as completed.
+- :white_check_mark: Favorites - Users can save and view their favorite videos on a dedicated page.
+- :white_check_mark: Contact - Users can reach out to the platform owner through a contact form, which is built with Nodemailer and API routes.
+
+### Finished features:
 
 - :x: Theme switcher
-- :white_check_mark: Finish forum page
 - :x: Finish homepage
-- :white_check_mark: User ranking as belt based on viewed content
 - :x: Add at least 10 more courses
-- :white_check_mark: Filter option in /courses page based on tags (e.g., GUARD, SUBMISSION, JUDO, PASSING, etc.)
-- :white_check_mark: Creators page
 - :x: Additional sign-in options (meta etc..)
+
+### Finished features:
 
 ## Installation
 
