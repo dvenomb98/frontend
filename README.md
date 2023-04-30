@@ -15,7 +15,7 @@ BJJ DOJO is an online platform that curates free YouTube videos from the best Br
 - :white_check_mark: Favorites - Users can save and view their favorite videos on a dedicated page.
 - :white_check_mark: Contact - Users can reach out to the platform owner through a contact form, which is built with Nodemailer and API routes.
 
-### Finished features:
+### Upcoming features:
 
 - :x: Theme switcher
 - :x: Finish homepage
