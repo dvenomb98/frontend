@@ -22,9 +22,9 @@ const UserBadge: FC = () => {
           displayName={userData.displayName}
           email={userData.email}
           rank={userData.rank}
-          className="sm:flex-col sm:text-center"
+          className="sm:flex-col"
         />
-        <div className="flex justify-between w-full items-center sm:flex-col sm:gap-5">
+        <div className="flex justify-between w-full sm:items-start sm:mb-5 items-center sm:flex-col sm:gap-5">
           <Button onClick={signOut} sx={buttonSX}>
             <ArrowLeftOnRectangleIcon className="w-5 h-5" />
             Sign out

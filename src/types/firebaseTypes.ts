@@ -1,5 +1,5 @@
 import { UserRank } from '@/constants/user';
-import { User } from 'firebase/auth';
+import { DateTime } from 'luxon';
 
 export interface Courses {
   id: string;
@@ -36,7 +36,7 @@ export interface CourseContent {
 
 export interface UserData {
   displayName: string;
-  createdAt: string;
+  createdAt: DateTime | string;
   email: string;
   photoURL: string;
   favorites: string[];
@@ -58,7 +58,7 @@ export interface Topic {
   likes: string[];
   forum_id: string;
   content: any;
-  created_at: string;
+  created_at: DateTime | string;
   user_id: string;
   title: string;
   user_profile: UserNonSensitive;
@@ -67,7 +67,7 @@ export interface Topic {
 export interface Comment {
   id: string;
   content: string;
-  created_at: string;
+  created_at: string | DateTime;
   topic_id: string;
   user_id: string;
   user_profile: UserNonSensitive;

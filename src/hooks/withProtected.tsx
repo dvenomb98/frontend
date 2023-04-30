@@ -3,18 +3,15 @@ import React, { useEffect } from 'react';
 import auth from '../../firebase';
 import { useUser } from '@/context/userContext';
 import PageLoader from '@/components/atoms/PageLoader';
-import { NextPage } from 'next';
 
 export function withProtected(Component: React.ComponentType<any>) {
   return function WithProtected(props: React.PropsWithChildren<any>) {
-    const { user } = useUser();
+    const { user, contextLoad } = useUser();
     const router = useRouter();
 
     useEffect(() => {
-      if (!user) {
-        router.replace('/');
-      }
-    }, [user, router]);
+      if (!user && contextLoad) router.replace('/');
+    }, [user, router, contextLoad]);
 
     if (!user) {
       return <PageLoader isLoading />;

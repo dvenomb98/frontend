@@ -5,6 +5,7 @@ import ForumTopic from '@/components/forum/ForumTopic';
 import ForumWrapper from '@/components/forum/ForumWrapper';
 import PageLayout from '@/components/layouts/PageLayout';
 import { revalidate } from '@/config/next';
+import { withProtected } from '@/hooks/withProtected';
 import { Courses, Topic } from '@/types/firebaseTypes';
 import { fetchForumTopic, fetchSingleForumContent } from '@/utils/fetchUtils';
 import { GetServerSideProps, NextPage } from 'next';
@@ -16,26 +17,24 @@ interface TopicProps {
 }
 
 const Topic: NextPage<TopicProps> = ({ topics, forumContext }) => {
-  const { title } = forumContext;
+  const { title, id } = forumContext;
 
   return (
     <PageLayout>
       <div className="flex flex-col gap-5">
         <ForumBreadCumbs title={title} />
-        <ForumCreateTopic />
+        <ForumCreateTopic forum_id={id} />
       </div>
       <ForumWrapper>
         {topics.map((topic) => (
-          <>
-            <ForumTopic topic={topic} key={topic.id} />
-          </>
+          <ForumTopic topic={topic} key={topic.id} />
         ))}
       </ForumWrapper>
     </PageLayout>
   );
 };
 
-export default Topic;
+export default withProtected(Topic);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const id = context.params?.id;

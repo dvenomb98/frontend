@@ -14,10 +14,10 @@ interface UserProfileProps {
 
 const UserProfile: FC<UserProfileProps> = ({ photoURL, displayName, email, className, rank }) => {
   return (
-    <div className={classNames('flex items-center gap-2', className)}>
+    <div className={classNames('flex sm:items-start lg:items-center gap-2', className)}>
       <Avatar src={photoURL} alt={displayName} sx={{ height: 50, width: 50 }} />
       <div>
-        <div className="flex items-center gap-1 sm:flex-col-reverse">
+        <div className="flex lg:items-center sm:items-start gap-1 sm:flex-col-reverse">
           <p>{displayName}</p>
           <RankDisplay rank={rank} />
         </div>

@@ -1,9 +1,32 @@
-import { arrayRemove, arrayUnion, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  runTransaction,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { db } from '../../firebase';
 import { User } from 'firebase/auth';
 import { FirebaseDocs } from '@/constants/firebaseConsts';
 import { UserRank } from '@/constants/user';
 import { Maybe } from 'yup';
+import { ForumTopicInitialValues } from '@/components/forum/ForumCreateTopic';
+import { nanoid } from 'nanoid';
+import { CommentInitialValues } from '@/components/forum/topicComponents/CommentAdd';
+import { Topic } from '@/types/firebaseTypes';
+
+export const isTopicLiked = (user_id: string, likes: string[]) =>
+  likes.some((like) => like === user_id);
+
+export const shouldUserRankUp = (completedVideos: number, currentRank: string): Maybe<UserRank> => {
+  if (completedVideos >= 5 && currentRank === UserRank.WHITE) return UserRank.BLUE;
+  else if (completedVideos >= 10 && currentRank === UserRank.BLUE) return UserRank.PURPLE;
+  else if (completedVideos >= 15 && currentRank === UserRank.PURPLE) return UserRank.BROWN;
+  else if (completedVideos >= 20 && currentRank === UserRank.BROWN) return UserRank.BLACK;
+  else return undefined;
+};
 
 export const isVideoFavorite = (videoId: string, favorites: string[]) =>
   favorites.some((favorite) => favorite === videoId);
@@ -103,10 +126,63 @@ export const createUserDocument = async (user: User) => {
   }
 };
 
-export const shouldUserRankUp = (completedVideos: number, currentRank: string): Maybe<UserRank> => {
-  if (completedVideos >= 5 && currentRank === UserRank.WHITE) return UserRank.BLUE;
-  else if (completedVideos >= 10 && currentRank === UserRank.BLUE) return UserRank.PURPLE;
-  else if (completedVideos >= 15 && currentRank === UserRank.PURPLE) return UserRank.BROWN;
-  else if (completedVideos >= 20 && currentRank === UserRank.BROWN) return UserRank.BLACK;
-  else return undefined;
+export const createForumTopic = async (values: ForumTopicInitialValues): Promise<boolean> => {
+  const uniqueID = `topic_${nanoid()}`;
+  const ref = doc(db, FirebaseDocs.TOPICS, uniqueID);
+  try {
+    await setDoc(ref, {
+      ...values,
+      id: uniqueID,
+    });
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
+export const createForumComment = async (values: CommentInitialValues): Promise<boolean> => {
+  const uniqueID = `comment_${nanoid()}`;
+  const ref = doc(db, FirebaseDocs.COMMENTS, uniqueID);
+  try {
+    await setDoc(ref, {
+      ...values,
+      id: uniqueID,
+    });
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
+};
+
+export const handleTopicLike = async (id: string, user_id: string): Promise<boolean> => {
+  try {
+    const ref = doc(db, FirebaseDocs.TOPICS, id);
+    await runTransaction(db, async (transaction) => {
+      const doc = await transaction.get(ref);
+
+      if (!doc.exists()) {
+        throw new Error('Order does not exist!');
+      }
+
+      const data = doc.data() as Topic;
+
+      const isLiked = isTopicLiked(user_id, data.likes);
+
+      if (isLiked) {
+        transaction.update(ref, {
+          likes: arrayRemove(user_id),
+        });
+      } else {
+        transaction.update(ref, {
+          likes: arrayUnion(user_id),
+        });
+      }
+    });
+    return true;
+  } catch (e) {
+    console.error(e);
+    return false;
+  }
 };

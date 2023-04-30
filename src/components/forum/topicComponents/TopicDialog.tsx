@@ -20,7 +20,7 @@ const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const { isMobile } = useMobileWidth();
 
-  const { title, likes, content, user_profile, id } = topic;
+  const { title, likes, content, user_profile, id, created_at } = topic;
 
   const dialogTitle = `Topic from ${user_profile.displayName}`;
 
@@ -33,7 +33,11 @@ const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
     };
 
     fetchComments();
-  }, [isOpen]);
+  }, [isOpen, loaded]);
+
+  const handleRefetch = () => {
+    setLoaded(false);
+  };
 
   return (
     <>
@@ -49,9 +53,15 @@ const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
         mobileWidth={'100%'}
         fullScreen={isMobile}
       >
-        <div className="relative">
+        <div className="relative h-full">
           <div className="flex flex-col gap-5 border-y border-primary-gray py-10">
-            <TopicHeader title={title} user_profile={user_profile} likes={likes} />
+            <TopicHeader
+              id={id}
+              title={title}
+              user_profile={user_profile}
+              likes={likes}
+              created_at={created_at}
+            />
             <p className="text-primary-gray">{content}</p>
           </div>
           <div className="flex flex-col gap-4 py-10">
@@ -67,7 +77,7 @@ const TopicDialog: FC<TopicDialogProps> = ({ topic }) => {
               </>
             )}
           </div>
-          <CommentAdd topic_id={id} />
+          <CommentAdd topic_id={id} handleRefetch={handleRefetch} />
         </div>
       </CustomDialog>
     </>

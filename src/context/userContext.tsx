@@ -11,6 +11,7 @@ interface UserContextValue {
   signOut: () => void;
   userData: UserData | null;
   authLoading: boolean;
+  contextLoad: boolean;
 }
 
 const UserContext = createContext<UserContextValue>({
@@ -19,6 +20,7 @@ const UserContext = createContext<UserContextValue>({
   signOut: () => {},
   userData: null,
   authLoading: false,
+  contextLoad: false,
 });
 
 export const useUser = () => {
@@ -33,6 +35,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [authLoading, setAuthLoading] = useState<boolean>(false);
+  const [contextLoad, setContextLoad] = useState<boolean>(false);
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -62,6 +65,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setContextLoad(true);
     });
     return () => {
       unsubscribe();
@@ -80,8 +84,10 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, signInWithGoogle, signOut, userData, authLoading }}>
-      {children}
+    <UserContext.Provider
+      value={{ user, signInWithGoogle, signOut, userData, authLoading, contextLoad }}
+    >
+      {contextLoad && children}
     </UserContext.Provider>
   );
 };
