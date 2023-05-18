@@ -9,6 +9,7 @@ import Footer from '@/components/footer/Footer';
 import AuthLoader from '@/components/atoms/AuthLoader';
 import { DefaultSeo } from 'next-seo';
 import { GLOBAL_SEO } from '@/constants/globals';
+import NextNProgress from 'nextjs-progressbar';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
@@ -23,6 +24,7 @@ const App = ({ Component, pageProps }: AppProps) => {
             </main>
             <Footer />
             <AuthLoader />
+            <NextNProgress color="#f59e0b" startPosition={0.3} showOnShallow />
           </SnackbarProvider>
         </ThemeProvider>
       </UserProvider>
