@@ -1,5 +1,11 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { GoogleAuthProvider, User, onAuthStateChanged, signInWithRedirect } from 'firebase/auth';
+import {
+  GoogleAuthProvider,
+  User,
+  getRedirectResult,
+  onAuthStateChanged,
+  signInWithRedirect,
+} from 'firebase/auth';
 import { auth, db } from '../../firebase';
 import { UserData } from '@/types/firebaseTypes';
 import { createUserDocument } from '@/utils/userUtils';
@@ -41,14 +47,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const provider = new GoogleAuthProvider();
     try {
       setAuthLoading(true);
-      const result = await signInWithRedirect(auth, provider);
-
-      const { user } = result;
-
-      await createUserDocument(user);
+      await signInWithRedirect(auth, provider);
+      const result = await getRedirectResult(auth);
+      await createUserDocument(result?.user!);
       setAuthLoading(false);
     } catch (error) {
       console.error('Error during Google sign-in', error);
+      setAuthLoading(false);
     }
   };
 
@@ -59,6 +64,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setAuthLoading(false);
     } catch (error) {
       console.error('Error during Google sign-out', error);
+      setAuthLoading(false);
     }
   };
 
