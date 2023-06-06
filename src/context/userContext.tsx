@@ -48,8 +48,6 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     try {
       setAuthLoading(true);
       await signInWithRedirect(auth, provider);
-      const result = await getRedirectResult(auth);
-      await createUserDocument(result?.user!);
       setAuthLoading(false);
     } catch (error) {
       console.error('Error during Google sign-in', error);
@@ -67,6 +65,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       setAuthLoading(false);
     }
   };
+
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      const result = await getRedirectResult(auth);
+      if (!result) return;
+      await createUserDocument(result?.user!);
+    };
+
+    if (user) return;
+    handleRedirectResult();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
